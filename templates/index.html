@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">  
+    <title>Model Prediction</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav>
+        <div class="head_name">
+            <p><img src="{{ url_for('static', filename='resultat.png') }}" alt="this is my logo" class="logo"></p>
+        </div>
+        <ul class="nav-links">
+            <li class="link"><a href="{{ url_for('home') }}">Home</a></li>
+            <li id="link1" class="link"><a href="{{ url_for('model_page') }}">Model</a></li>
+            <li id="link3" class="link"><a href="{{ url_for('home') }}">About</a></li>
+        </ul>
+    </nav>
+
+    <h1>Multilingual Sentiment Analysis</h1>
+    <h4>We are excited to introduce a multilingual sentiment model! Now you can analyze sentiment across multiple languages, 
+        enhancing your global reach.</h4>
+    <h5>Enter your text for analysis.</h5>
+    <form id="model-form">
+        <textarea name="user_input" rows="5" cols="30" placeholder="Entrer vous text ici s'il vous plait..."></textarea>
+        <textarea id="result-area" placeholder="Le résultat apparaîtra ici..." readonly></textarea>
+        <br>
+        <button type="button" id="submit-btn" class="submit-btn" onclick="submitForm()">
+            <i class="fas fa-play"></i><span>Run Tool</span>
+        </button>
+    </form>
+    
+    
+    <script >
+        async function submitForm() {
+            const formData = new FormData(document.getElementById("model-form"));
+
+            try {
+                // Send the form data to the backend
+                const response = await fetch('/model', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                // Handle the response
+                const data = await response.json();
+                
+                if (data.result) {
+                    document.getElementById("result-area").value = data.result;
+                } else {
+                    alert(data.error || 'Erreur lors de la prédiction.');
+                }
+            } catch (error) {
+                console.error('Erreur lors de la soumission du formulaire:', error);
+                alert('Une erreur s\'est produite lors du traitement.');
+            }
+        }
+    </script>
+
+</body>
+</html>

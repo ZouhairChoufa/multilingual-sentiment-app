@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual Environment
+# (If your venv is inside the project, name it 'venv' or add its name here)
+venv/
+Include/
+Lib/
+Scripts/
+share/
+pyvenv.cfg
+
+# IDE & OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large Model & Training Files
+# (It's bad practice to commit large .pth, .bin, or .safetensors files)
+*.pth
+*.bin
+*.safetensors
+/config_model/
+/results/
+
+# Notebook cache
+.ipynb_checkpoints
+
+# Logos
+static/logo-site-web.png
